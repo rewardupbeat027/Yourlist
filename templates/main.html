@@ -7,7 +7,7 @@
 {% for i in purchase %}
 <ul>
     <li>{{i.title}}</li>
-    <li><img src="{{ i.image }}" alt="Моя картинка" style="width: 400px; hieght: 400px;"></li>
+    <li><img src="{{ i.image.url }}" alt="Моя картинка" style="width: 400px; hieght: 400px;"></li>
     <li><h5>Deadline:</h5></li>
     <li>{{i.date}}</li>
     <li><a href="{% url 'mydetail' i.id %}">Подробнее</a></li>
