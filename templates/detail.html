@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block title %}
+YourList
+{% endblock %}
+{% block body %}
+<ul>
+<li><h3>{{name.title}}</h3></li>
+<li><p><img src="{{ name.image }}" alt="Моя картинка" style="width: 400px; hieght: 400px;"></p></li>
+<li><p style="text-alight: center;">{{name.category}}</p></li>
+<li><p style="text-alight: center;"> {{name.text}} </p></li>
+<li><h4 style="text-alight: center;">Your deadline is:</h4></li>
+<li><p style="text-alight: center;"> {{name.date}}</p></li>
+</ul>
+{% endblock %}

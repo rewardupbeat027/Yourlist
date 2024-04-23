@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block title %} YourList {% endblock %}
+{% block body %}
+{% if user.is_authenticated%}
+<h3> Hi, {{user.username}}, it is YourList, we help to organize your purchases!</h3>
+{% endif %}
+<form method="POST">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit">Save</button>
+</form>
+{% endblock %}
