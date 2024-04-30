@@ -12,8 +12,9 @@ class Purchase(models.Model):
     category = models.CharField('Category', max_length=50)
     text = models.CharField('Comment to purchase:', max_length=200)
     date = models.DateTimeField('Deadline time/date(example:2024-12-31):')
-    image = models.ForeignKey(ProductImage, on_delete=models.CASCADE, related_name='images')
+    image = models.ForeignKey(ProductImage, blank=True, on_delete=models.CASCADE, related_name='images')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='registration_purchase')
+    is_visible = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

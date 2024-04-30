@@ -5,16 +5,26 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView
 
-from .forms import UserForm, SuperModelForm
+from .forms import UserForm, SuperModelForm, ProductForm
 from .models import Purchase
 
 
 # Create your views here.
 def index(request):
     return render(request, "index.html")
+
+
 @login_required
 def main(request):
     purchase = Purchase.objects.all()
+    if request.method == 'POST':
+        form = ProductForm(data=request.POST)
+        if form.is_valid():
+            ids = form.cleaned_data.get('product')  # Example: ['pk', 'pk']
+            for id in ids:
+                product = Purchase.objects.all()
+                product.is_visible = True
+                product.save()
     return render(request, 'main.html', {'purchase': purchase})
 
 
@@ -23,30 +33,37 @@ class MyDetailView(DetailView):
     template_name = 'detail.html'
     context_object_name = 'name'
 
+
 @login_required
 def mainA_Z(request):
     purchase = Purchase.objects.all().order_by("title")
     return render(request, 'mainA-Z.html', {'purchase': purchase})
+
 
 @login_required
 def mainZ_A(request):
     purchase = Purchase.objects.order_by("-title")
     return render(request, 'mainZ-A.html', {'purchase': purchase})
 
+
 @login_required
 def main_date(request):
     purchase = Purchase.objects.order_by('date')
     return render(request, 'main_date.html', {'purchase': purchase})
 
+
 @login_required
 def main__date(request):
     purchase = Purchase.objects.order_by('-date')
     return render(request, 'main_date.html', {'purchase': purchase})
+
+
 class UserRegister(CreateView):
     model = User
     template_name = 'registration/reg.html'
     form_class = UserForm
     success_url = reverse_lazy('login')
+
 
 def addpurchase(request):
     if request.method == 'POST':
@@ -57,4 +74,3 @@ def addpurchase(request):
     else:
         form = SuperModelForm()
     return render(request, 'addpurchase.html', {'form': form})
-
