@@ -18,15 +18,14 @@ def index(request):
 def main(request):
     purchase = Purchase.objects.all()
     if request.method == 'POST':
-        form = ProductForm(data=request.POST)
+        form = ProductForm(request.POST)  # Загрузка данных в форму
         if form.is_valid():
-            ids = form.cleaned_data.get('product')  # Example: ['pk', 'pk']
-            for id in ids:
-                product = Purchase.objects.all()
+            products = form.cleaned_data['product']
+            for product in products:
                 product.is_visible = True
                 product.save()
+            return redirect('main')  # Перенаправление для предотвращения повторной отправки формы
     return render(request, 'main.html', {'purchase': purchase})
-
 
 class MyDetailView(DetailView):
     model = Purchase
@@ -42,7 +41,7 @@ def mainA_Z(request):
 
 @login_required
 def mainZ_A(request):
-    purchase = Purchase.objects.order_by("-title")
+    purchase = Purchase.objects.all().order_by("-title")
     return render(request, 'mainZ-A.html', {'purchase': purchase})
 
 

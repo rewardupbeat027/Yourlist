@@ -18,4 +18,12 @@ class SuperModelForm(ModelForm):
         fields = "__all__"
 
 class ProductForm(forms.ModelForm):
-    product = forms.ModelChoiceField(widget=forms.CheckboxSelectMultiple, queryset=Purchase.objects.all())
+    product = forms.ModelMultipleChoiceField(
+        queryset=Purchase.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False  # Указываем, что это поле необязательно
+    )
+
+    class Meta:
+        model = Purchase
+        fields = ['product']  # Указываем, что поле product должно быть в форме

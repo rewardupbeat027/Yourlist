@@ -1,19 +1,23 @@
 {% extends 'layout.html' %}
 {% block title %} YourList {% endblock %}
 {% block body %}
-{% if user.is_authenticated%}
-<h3> Hi, {{user.username}}, it is YourList, we help to organize your purchases!</h3>
+{% if user.is_authenticated %}
+<h3> Hi, {{ user.username }}, it is YourList, we help to organize your purchases!</h3>
+<form method="post" action="{% url 'main' %}">
+    {% csrf_token %}
+    {% for i in purchase %}
+    <ul>
+        <li>{{ i.title }}</li>
+        <li><img src="{{ i.image.url }}" alt="Моя картинка" style="width: 400px; height: 400px;"></li>
+        <li><h5>Deadline:</h5>{{ i.date }}</li>
+        <li><a href="{% url 'mydetail' i.id %}">Подробнее</a></li>
+        <li>
+            <input type="checkbox" class="form-check-input" id="checkbox_{{ i.id }}" name="product" value="{{ i.id }}" {% if i.is_visible %} checked {% endif %}>
+            <label class="form-check-label" for="checkbox_{{ i.id }}">done</label>
+        </li>
+    </ul>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+</form>
 {% endif %}
-{% for i in purchase %}
-<ul>
-    <li>{{i.title}}</li>
-    <li><img src="{{ i.image.url }}" alt="Моя картинка" style="width: 400px; hieght: 400px;"></li>
-    <li><h5>Deadline:</h5></li>
-    <li>{{i.date}}</li>
-    <li><a href="{% url 'mydetail' i.id %}">Подробнее</a></li>
-    <li><input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">done</label></li>
-
-</ul>
-{% endfor %}
 {% endblock %}

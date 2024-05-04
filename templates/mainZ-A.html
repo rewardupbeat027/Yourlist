@@ -3,17 +3,23 @@
 {% block body %}
 {% if user.is_authenticated%}
 <h3> Hi, {{user.username}}, it is YourList, we help to organize your purchases!</h3>
-{% endif %}
 <h5>Sorted by Z-A:</h5>
-    {% for i in purchase|dictsort:'title' %}
+<form method="post" action="{% url 'main_date' %}">
+    {% csrf_token %}
+    {% for i in purchase %}
     <ul>
-    <li>{{i.title}}</li>
-    <li><img src="{{ i.image.url }}" alt="Моя картинка" style="width: 400px; hieght: 200px;"></li>
-    <li><h5>Deadline:</h5></li>
-    <li>{{i.date}}</li>
-    <li><a href="{% url 'mydetail' i.id %}">Подробнее</a></li>
-        <li><input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">done</label></li>
+        <li>{{i.title}}</li>
+        <li><img src="{{ i.image.url }}" alt="My picture" style="width: 400px; hieght: 200px;"></li>
+        <li><h5>Deadline:</h5></li>
+        <li>{{i.date}}</li>
+        <li><a href="{% url 'mydetail' i.id %}">Learn more</a></li>
+        <li><input type="checkbox" class="form-check-input" id="checkbox_{{ i.id }}" name="product" value="{{ i.id }}"
+                   {% if i.is_visible %} checked {% endif %}>
+            <label class="form-check-label" for="checkbox_{{ i.id }}">done</label>
     </ul>
     {% endfor %}
+    <button type="submit" class="btn btn-primary">Save changes</button>
+</form>
+{% endif %}
+
 {% endblock %}
