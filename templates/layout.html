@@ -18,21 +18,21 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/">Home</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/addpurchase/">Add purchase</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'add' %}">Add purchase</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Sort
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="http://127.0.0.1:8000/A-Z/">A-Z</a></li>
-            <li><a class="dropdown-item" href="http://127.0.0.1:8000/Z-A/">Z-A</a></li>
-            <li><a class="dropdown-item" href="http://127.0.0.1:8000/date/">date</a></li>
-            <li><a class="dropdown-item" href="http://127.0.0.1:8000/-date/">-date</a></li>
-            <li><a class="dropdown-item" href="http://127.0.0.1:8000/main/">revert changes</a></li>
+            <li><a class="dropdown-item" href="{% url 'main_A-Z' %}">A-Z</a></li>
+            <li><a class="dropdown-item" href="{% url 'main_Z-A' %}">Z-A</a></li>
+            <li><a class="dropdown-item" href="{% url 'main_date' %}">date</a></li>
+            <li><a class="dropdown-item" href="{% url 'main_-date' %}">-date</a></li>
+            <li><a class="dropdown-item" href="{% url 'main' %}">revert changes</a></li>
           </ul>
         </li>
         <li class="nav-item">

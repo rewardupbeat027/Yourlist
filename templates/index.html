@@ -33,7 +33,7 @@
       </button>
     </h2>
     <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">You can easily organize your purchases. Just <a class="btn btn-primary" href="http://127.0.0.1:8000/registr/" role="button">Registrate</a></div>
+      <div class="accordion-body">You can easily organize your purchases. Just <a class="btn btn-primary" href="{% url 'registrate' %}" role="button">Registrate</a></div>
     </div>
   </div>
   <div class="accordion-item">
@@ -43,7 +43,7 @@
       </button>
     </h2>
     <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Did you already registered? Not a problem! <a class="btn btn-primary" href="http://127.0.0.1:8000/accounts/login/" role="button">Login</a></div>
+      <div class="accordion-body">Did you already registered? Not a problem! <a class="btn btn-primary" href="{% url 'login' %}" role="button">Login</a></div>
     </div>
   </div>
   <div class="accordion-item">
@@ -53,7 +53,7 @@
       </button>
     </h2>
     <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Did you just authenticated? Let's start! <a class="btn btn-primary" href="http://127.0.0.1:8000/main/" role="button">Organize</a></div>
+      <div class="accordion-body">Did you just authenticated? Let's start! <a class="btn btn-primary" href="{% url 'main' %}" role="button">Organize</a></div>
     </div>
   </div>
 </div>
