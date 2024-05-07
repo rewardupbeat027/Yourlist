@@ -27,6 +27,7 @@ def main(request):
             return redirect('main')  # Перенаправление для предотвращения повторной отправки формы
     return render(request, 'main.html', {'purchase': purchase})
 
+
 class MyDetailView(DetailView):
     model = Purchase
     template_name = 'detail.html'
@@ -64,12 +65,16 @@ class UserRegister(CreateView):
     success_url = reverse_lazy('login')
 
 
+@login_required
 def addpurchase(request):
     if request.method == 'POST':
-        form = SuperModelForm(request.POST)
+        form = SuperModelForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            purchase = form.save(commit=False)
+            purchase.user = request.user
+            purchase.save()
             return redirect('main')
     else:
         form = SuperModelForm()
     return render(request, 'addpurchase.html', {'form': form})
+

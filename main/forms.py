@@ -16,6 +16,8 @@ class SuperModelForm(ModelForm):
     class Meta:
         model = Purchase
         fields = "__all__"
+        exclude = ('user',)
+
 
 class ProductForm(forms.ModelForm):
     product = forms.ModelMultipleChoiceField(
