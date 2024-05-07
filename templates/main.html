@@ -8,7 +8,9 @@
     {% for i in purchase %}
     <ul>
         <li>{{ i.title }}</li>
+        {% if i.image %}
         <li><img src="{{ i.image.url }}" alt="Моя картинка" style="width: 400px; height: 400px;"></li>
+        {% endif %}
         <li><h5>Deadline:</h5>{{ i.date }}</li>
         <li><a href="{% url 'mydetail' i.id %}">Подробнее</a></li>
         <li>
