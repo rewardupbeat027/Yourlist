@@ -5,9 +5,9 @@ YourList
 {% block body %}
 <ul>
     <li><h3>{{name.title}}</h3></li>
-    {% if i.image %}
+
     <li><p><img src="{{ name.image.url }}" alt="Моя картинка" style="width: 400px; hieght: 400px;"></p></li>
-    {% endif %}
+
     <li><p style="text-alight: center;">{{name.category}}</p></li>
     <li><p style="text-alight: center;"> {{name.text}} </p></li>
     <li><h4 style="text-alight: center;">Your deadline is:</h4></li>

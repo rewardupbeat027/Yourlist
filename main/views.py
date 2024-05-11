@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView
-
+from django.db.models import Q
 from .forms import UserForm, SuperModelForm, ProductForm
 from .models import Purchase
 
@@ -37,24 +37,56 @@ class MyDetailView(DetailView):
 @login_required
 def mainA_Z(request):
     purchase = Purchase.objects.all().order_by("title")
+    if request.method == 'POST':
+        form = ProductForm(request.POST)  # Загрузка данных в форму
+        if form.is_valid():
+            products = form.cleaned_data['product']
+            for product in products:
+                product.is_visible = True
+                product.save()
+            return redirect('main')  # Перенаправление для предотвращения повторной отправки формы
     return render(request, 'mainA-Z.html', {'purchase': purchase})
 
 
 @login_required
 def mainZ_A(request):
     purchase = Purchase.objects.all().order_by("-title")
+    if request.method == 'POST':
+        form = ProductForm(request.POST)  # Загрузка данных в форму
+        if form.is_valid():
+            products = form.cleaned_data['product']
+            for product in products:
+                product.is_visible = True
+                product.save()
+            return redirect('main')  # Перенаправление для предотвращения повторной отправки формы
     return render(request, 'mainZ-A.html', {'purchase': purchase})
 
 
 @login_required
 def main_date(request):
     purchase = Purchase.objects.order_by('date')
+    if request.method == 'POST':
+        form = ProductForm(request.POST)  # Загрузка данных в форму
+        if form.is_valid():
+            products = form.cleaned_data['product']
+            for product in products:
+                product.is_visible = True
+                product.save()
+            return redirect('main')  # Перенаправление для предотвращения повторной отправки формы
     return render(request, 'main_date.html', {'purchase': purchase})
 
 
 @login_required
 def main__date(request):
     purchase = Purchase.objects.order_by('-date')
+    if request.method == 'POST':
+        form = ProductForm(request.POST)  # Загрузка данных в форму
+        if form.is_valid():
+            products = form.cleaned_data['product']
+            for product in products:
+                product.is_visible = True
+                product.save()
+            return redirect('main')  # Перенаправление для предотвращения повторной отправки формы
     return render(request, 'main_date.html', {'purchase': purchase})
 
 
@@ -77,4 +109,3 @@ def addpurchase(request):
     else:
         form = SuperModelForm()
     return render(request, 'addpurchase.html', {'form': form})
-
