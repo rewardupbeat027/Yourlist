@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView
-from django.db.models import Q
 from .forms import UserForm, SuperModelForm, ProductForm
 from .models import Purchase
 
@@ -16,7 +15,7 @@ def index(request):
 
 @login_required
 def main(request):
-    purchase = Purchase.objects.all()
+    purchase = Purchase.objects.all().filter(user=request.user)
     if request.method == 'POST':
         form = ProductForm(request.POST)  # Загрузка данных в форму
         if form.is_valid():
@@ -36,7 +35,7 @@ class MyDetailView(DetailView):
 
 @login_required
 def mainA_Z(request):
-    purchase = Purchase.objects.all().order_by("title")
+    purchase = Purchase.objects.all().order_by("title").filter(user=request.user)
     if request.method == 'POST':
         form = ProductForm(request.POST)  # Загрузка данных в форму
         if form.is_valid():
@@ -50,7 +49,7 @@ def mainA_Z(request):
 
 @login_required
 def mainZ_A(request):
-    purchase = Purchase.objects.all().order_by("-title")
+    purchase = Purchase.objects.all().order_by("-title").filter(user=request.user)
     if request.method == 'POST':
         form = ProductForm(request.POST)  # Загрузка данных в форму
         if form.is_valid():
@@ -64,7 +63,7 @@ def mainZ_A(request):
 
 @login_required
 def main_date(request):
-    purchase = Purchase.objects.order_by('date')
+    purchase = Purchase.objects.order_by('date').filter(user=request.user)
     if request.method == 'POST':
         form = ProductForm(request.POST)  # Загрузка данных в форму
         if form.is_valid():
@@ -78,7 +77,7 @@ def main_date(request):
 
 @login_required
 def main__date(request):
-    purchase = Purchase.objects.order_by('-date')
+    purchase = Purchase.objects.order_by('-date').filter(user=request.user)
     if request.method == 'POST':
         form = ProductForm(request.POST)  # Загрузка данных в форму
         if form.is_valid():
