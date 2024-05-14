@@ -9,7 +9,7 @@ class Purchase(models.Model):
     title = models.CharField('Name:', max_length=50)
     category = models.CharField('Category', max_length=50)
     text = models.CharField('Comment to purchase:', max_length=200)
-    date = models.DateTimeField('Deadline time/date(example:2024-12-31):')
+    date = models.DateTimeField('Deadline time/date(example:2012-03-13 21:12:20):')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='registration_purchase')
     is_visible = models.BooleanField(default=False)
     image = models.ImageField(upload_to='images/', blank=True)

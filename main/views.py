@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
@@ -31,6 +32,25 @@ class MyDetailView(DetailView):
     model = Purchase
     template_name = 'detail.html'
     context_object_name = 'name'
+
+    def get_object(self, queryset=None):
+        if queryset is None:
+            queryset = self.get_queryset()
+        obj = super().get_object(queryset=queryset)
+        if obj.user != self.request.user:
+            raise Http404("Нету записей")
+        return obj
+
+    def post(self, request, *args, **kwargs):
+
+        self.object = self.get_object()
+
+        if "delete" in request.POST:
+            self.object.delete()
+
+            return HttpResponseRedirect(reverse_lazy('main'))
+        #
+        return super().get(request, *args, **kwargs)
 
 
 @login_required
