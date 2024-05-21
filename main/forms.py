@@ -22,7 +22,7 @@ class SuperModelForm(ModelForm):
     class Meta:
         model = Purchase
         fields = "__all__"
-        exclude = ('user',)
+        exclude = ('user', 'is_visible')
 
     # widgets = {
     #     'date': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),}

@@ -1,3 +1,6 @@
+from datetime import datetime
+
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import Http404, HttpResponseRedirect, HttpResponse
@@ -119,12 +122,21 @@ class UserRegister(CreateView):
 @login_required
 def addpurchase(request):
     if request.method == 'POST':
+
         form = SuperModelForm(request.POST, request.FILES)
         if form.is_valid():
             purchase = form.save(commit=False)
+            date = request.POST.get('date', None)
+            if date:
+                try:
+                    # Преобразование строки даты в объект datetime
+                    date = datetime.strptime(date, '%Y-%m-%dT%H:%M')
+                except ValueError:
+                    messages.error(request, "Неправильный формат даты.")
+                    return redirect("main")
             purchase.user = request.user
             purchase.save()
+            return redirect("main")
     else:
         form = SuperModelForm()
     return render(request, 'addpurchase.html', {'form': form})
-
