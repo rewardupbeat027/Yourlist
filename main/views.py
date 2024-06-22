@@ -3,6 +3,7 @@ from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -41,7 +42,7 @@ class MyDetailView(DetailView):
             queryset = self.get_queryset()
         obj = super().get_object(queryset=queryset)
         if obj.user != self.request.user:
-            raise Http404("Нету записей")
+            raise Http404("Нет записей")
         return obj
 
     def post(self, request, *args, **kwargs):
@@ -140,3 +141,12 @@ def addpurchase(request):
     else:
         form = SuperModelForm()
     return render(request, 'addpurchase.html', {'form': form})
+
+
+@login_required
+def SearchResultsView(request):
+    query = request.GET.get('q')
+    purchase = Purchase.objects.all().filter(
+        Q(title__icontains=query)
+    ).filter(user=request.user)
+    return render(request, 'main.html', {'purchase': purchase})
